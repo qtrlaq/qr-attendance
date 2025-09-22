@@ -38,36 +38,17 @@
     ✅ Тіркелу сәтті өтті!
   </p>
 <script>
-    function saveData() {
-      const name = document.getElementById("name").value.trim();
-      if (!name) {
-        alert("Аты-жөніңді енгіз!");
-        return;
-      }
+  const scriptURL = '<https://script.google.com/macros/s/AKfycbwoKKJn8P4p6lIyJIPtWUlzkGnJ6xggVNoXsYrdJ5TE7_srm6jSbu24mt-Cf_0NaAGA/exec>'
+  const form = document.forms['submit-to-google-sheet']
 
-      fetch("https://script.google.com/macros/s/AKfycbz3FN1QsginoWHbi_thAEE987iL9HN21sDbH2qaqCPzINihM4Z8xCFNfZTGdqfRScSN/exec", {   // ← осында Google Apps Script URL салыңыз
-        method: "POST",
-        body: JSON.stringify({ name: name }),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-      .then(res => res.text())
-      .then(res => {
-        if (res === "Success") {
-          document.getElementById("form").classList.add("hidden");
-          document.getElementById("success").classList.remove("hidden");
-        } else {
-          alert("Қате шықты, кейінірек байқап көр.");
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        alert("Серверге қосылмады.");
-      });
-    }
-  </script>
-
+  form.addEventListener('submit', e => {
+    e.preventDefault()
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response => console.log('Success!', response))
+      .catch(error => console.error('Error!', error.message))
+  })
+</script>
 </body>
 </html>
+
 
